@@ -9223,7 +9223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2682252423758838939, guid: c317dd64d2115374992841c995fcf634, type: 3}
       propertyPath: m_Name
-      value: XR Origin
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2682252423758838942, guid: c317dd64d2115374992841c995fcf634, type: 3}
       propertyPath: m_UseGravity
