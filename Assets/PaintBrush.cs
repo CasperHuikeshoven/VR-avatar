@@ -11,9 +11,13 @@ public class PaintBrush : MonoBehaviour
 
     private XRGrabInteractable grabbable;
     private bool isPainting = false;
+    GameObject paintList;
+    public GameObject paintingList;
 
     void Start()
     {
+        paintList = new GameObject("PaintList");
+        paintList.transform.parent = paintingList.transform;
         grabbable = GetComponent<XRGrabInteractable>();
         if (grabbable != null)
         {
@@ -42,7 +46,7 @@ public class PaintBrush : MonoBehaviour
         while (isPainting)
         {
             Paint();
-            yield return new WaitForSeconds(0.01f); // Adjust the interval as needed
+            yield return new WaitForSeconds(0.01f);
         }
     }
 
@@ -52,6 +56,7 @@ public class PaintBrush : MonoBehaviour
         if (Physics.Raycast(raycastTransform.position, raycastTransform.forward, out hit, 0.3f, paintingLayerMask))
         {
             GameObject painted = Instantiate(paint, hit.point, Quaternion.identity);
+            painted.transform.parent = paintList.transform;
             Renderer renderer = painted.GetComponent<Renderer>();
             if (renderer != null)
             {
@@ -62,5 +67,11 @@ public class PaintBrush : MonoBehaviour
                 Debug.LogError("Paint prefab does not have a Renderer component.");
             }
         }
+    }
+
+    public void ClearPainting(){
+        paintList.SetActive(false);
+        paintList = new GameObject("PaintList");
+        paintList.transform.parent = paintingList.transform;
     }
 }
