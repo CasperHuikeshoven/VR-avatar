@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class PaintBrush : MonoBehaviour
+public class PaintEraser : MonoBehaviour
 {
     public Transform raycastTransform;
     public GameObject brushPreview;
