@@ -46,49 +46,19 @@ public class PaintEraser : MonoBehaviour
     {
         while (isPainting)
         {
-            Paint();
+            Erase();
             yield return new WaitForSeconds(0.01f);
         }
     }
 
-    private void Paint()
+    private void Erase()
     {
         RaycastHit hit;
-        if (Physics.Raycast(raycastTransform.position, raycastTransform.forward, out hit, 0.3f, paintingLayerMask))
+        if (Physics.Raycast(raycastTransform.position, raycastTransform.forward, out hit, 0.3f))
         {
-            GameObject painted = Instantiate(paint, hit.point, Quaternion.identity);
-            painted.transform.parent = paintList.transform;
-            Renderer renderer = painted.GetComponent<Renderer>();
-            if (renderer != null)
-            {
-                renderer.sharedMaterial = material.sharedMaterial;
-            }
-            else
-            {
-                Debug.LogError("Paint prefab does not have a Renderer component.");
+            if(hit.collider.gameObject.tag == "Paint"){
+                Destroy(hit.collider.gameObject);
             }
         }
-    }
-
-    public void ClearPainting(){
-        paintList.SetActive(false);
-        paintList = new GameObject("PaintList");
-        paintList.transform.parent = paintingList.transform;
-    }
-
-    public void BiggerBrushSize(){
-        if(paint.transform.localScale.y < 1f){
-            paint.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
-            brushPreview.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
-        }
-        
-    }
-
-    public void SmallerBrushSize(){
-        if(paint.transform.localScale.y >= 0.02f){
-            paint.transform.localScale -= new Vector3(0.01f, 0.01f, 0.01f);
-            brushPreview.transform.localScale -= new Vector3(0.01f, 0.01f, 0.01f);
-        }
-        
     }
 }
